@@ -27,7 +27,7 @@ export const HouseForm = ({ manageMenuState }) => {
                 images
             }
         }).then(res => {
-            if(res.data.statusCode = 403){
+            if(res.data.statusCode == 403){
                 navigate("/admin/login")
             }
             console.log(res)
@@ -56,7 +56,7 @@ export const HouseForm = ({ manageMenuState }) => {
             });
             axios({
                 method: "post",
-                url: 'http://localhost:5000/imageUpload',
+                url: 'http://52.71.29.228/imageUpload',
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data"

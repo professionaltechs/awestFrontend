@@ -13,7 +13,7 @@ export const HouseTable = ({ manageMenuState }) => {
             method: "post",
             url: "apartment/get-all-apartments",
         }).then(res => {
-            if(res.data.statusCode = 403){
+            if(res.data.statusCode == 403){
                 navigate("/admin/login")
             }
             console.log(res.data.message)
