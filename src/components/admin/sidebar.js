@@ -1,5 +1,5 @@
 import {React, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Sidebar = ({menuState}) => {
 
@@ -15,15 +15,15 @@ export const Sidebar = ({menuState}) => {
             </div>
             <ul className="nav-links">
                 <li className={houseControl ? 'showMenu': ''}>
-                    <div className="iocn-link">
-                        <a href="/">
+                    <div className="iocn-link" onClick={() => {houseControl ? setHouseControl(false) : setHouseControl(true)}}>
+                        <Link to="#">
                             <i className='bx bx-collection'></i>
-                            <span className="link_name">Category</span>
-                        </a>
-                        <i className='bx bxs-chevron-down arrow' onClick={() => {houseControl ? setHouseControl(false) : setHouseControl(true)}}></i>
+                            {menuState ? <span className="link_name">House</span> : null}
+                            
+                        </Link>
+                        <i className='bx bxs-chevron-down arrow' ></i>
                     </div>
                     <ul className="sub-menu">
-                        <li className="link_name">Category</li>
                         <li><span onClick={() => navigate('/admin')}>Form</span></li>
                         <li><span onClick={() => navigate('/admin/houses')}>List</span></li>
                     </ul>
@@ -34,7 +34,10 @@ export const Sidebar = ({menuState}) => {
 
                         </div>
                         <div className="name-job">
-                            <div className="profile_name">Logout</div>
+                            <div className="profile_name" onClick={() => {
+                                localStorage.clear()
+                                navigate("/admin/login")
+                            }}>Logout</div>
                             <div className="job"></div>
                         </div>
                         <i className='bx bx-log-out'></i>

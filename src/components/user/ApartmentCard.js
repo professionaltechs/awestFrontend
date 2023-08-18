@@ -6,7 +6,7 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 
 import im from "../../assets/images/aw32-14.jpg"
 
-export const ApartmentCard = ({ name, description, price, imgLinks }) => { //imgLinks = []
+export const ApartmentCard = ({ name, description, price, houseUrl, imgLinks }) => { //imgLinks = []
     const buttonClick = useRef(null);
 
   return (
@@ -33,112 +33,15 @@ export const ApartmentCard = ({ name, description, price, imgLinks }) => { //img
                     />
                   </a>
               })}
-              
-            {/* <a className="gallery-item" href="/images/aw32-01.jpg">
-              <img
-                //   ref={buttonClick}
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-01.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-02.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-02.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-03.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-03.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-04.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-04.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-05.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-05.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-06.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-06.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-07.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-07.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-08.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-08.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-09.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-09.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-10.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-10.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-11.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-11.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-12.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-12.jpg"
-                alt="No"
-              />
-            </a>
-            <a className="gallery-item" href="/images/aw32-13.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-13.jpg"
-                alt="No"
-              />
-            </a>
-            <a href="/images/aw32-14.jpg">
-              <img
-                className="img-fluid d-block rounded-top"
-                src="/images/aw32-14.jpg"
-                alt="No"
-              />
-            </a> */}
           </LightGallery>
-          <h4
-            className="title text-custom apartments text-center pt-4 my-0"
-          >
-            {name}
-          </h4>
+          <div style={{width: "100%"}}>
+            <h4
+              className="title text-custom apartments text-center pt-4 my-0"
+            >
+              {name}
+            </h4>
+
+          </div>
 
           <div className="content text-center pb-4 p-3">
             <p className="my-0">{description}</p>
@@ -159,7 +62,8 @@ export const ApartmentCard = ({ name, description, price, imgLinks }) => { //img
             <p>
               <a
                 className="my-0 btn btn-primary"
-                href="https://my.matterport.com/show/?m=rQajr8vaFBH&amp;brand=0"
+                href={houseUrl}
+                // href="https://my.matterport.com/show/?m=rQajr8vaFBH&amp;brand=0"
                 target="_blank"
                 rel="noreferrer"
               >

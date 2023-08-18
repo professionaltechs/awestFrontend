@@ -6,6 +6,7 @@ import { ListHouses } from './pages/admin/listHouses';
 import { Home } from './pages/user/home';
 import { AdminLogin } from './pages/admin/adminLogin';
 import { AdminProtected } from './components/admin/protected';
+import { EditModal } from './components/admin/EditModal';
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
         <Route path="/admin/houses" element={
           <AdminProtected>
             <ListHouses />
+          </AdminProtected>
+        } />
+        <Route path="/admin/edithouse" element={
+          <AdminProtected>
+            <EditModal />
           </AdminProtected>
         } />
       </Routes>

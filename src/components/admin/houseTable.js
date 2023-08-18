@@ -2,10 +2,16 @@ import { React, useEffect, useState } from 'react';
 import { TableRow } from './tableRow';
 import { axiosAuthInstance, axiosInstance } from '../../axios';
 import { useNavigate } from 'react-router-dom';
+import { EditModal } from './EditModal';
 
 export const HouseTable = ({ manageMenuState }) => {
+    const [open, setOpen] = useState(false)
+    
+
+    const [search, setSearch]= useState("")
 
     const [records, setRecords] = useState([])
+    const [totalRecords, setTotalRecords] = useState([])
     let navigate = useNavigate();
 
     const fetchRecords = () => {
@@ -18,6 +24,7 @@ export const HouseTable = ({ manageMenuState }) => {
             }
             console.log(res.data.message)
             setRecords(res.data.message)
+            setTotalRecords(res.data.message)
         }).catch(err => {
             console.log(err)
         })
@@ -26,8 +33,18 @@ export const HouseTable = ({ manageMenuState }) => {
         fetchRecords()
     }, [])
 
+    useEffect(() => {
+        if(search === ""){
+            setRecords(totalRecords)
+        }else{
+            setRecords(() => totalRecords.filter((item, index) => item.name.indexOf(search) >= 0))
+        }
+    }, [search])
+
     return (
+        
         <>
+            
             <section className="home-section">
                 <div className="home-content">
                     <i className='bx bx-menu' onClick={manageMenuState} style={{color: "#64c5b1"}}></i>
@@ -38,7 +55,7 @@ export const HouseTable = ({ manageMenuState }) => {
                     <div className="search_inner">
                         <form action="#">
                             <div className="search_field">
-                                <input type="text" placeholder="Search here..." />
+                                <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search by name here..." />
                             </div>
                             <button type="submit">
                                 <img src="image/icon_search.svg" alt="" />
@@ -83,18 +100,15 @@ export const HouseTable = ({ manageMenuState }) => {
                                                             <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                                                 colspan="1" style={{width: "182px"}} aria-label="Category: activate to sort column ascending">
                                                                 Url</th>
-                                                            {/* <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                                                colspan="1" style={{width: "174px"}} aria-label="Teacher: activate to sort column ascending">
-                                                                Address</th>
                                                             <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                                                 colspan="1" style={{width: "171px"}} aria-label="Lesson: activate to sort column ascending">
-                                                                City</th> */}
+                                                                imgs</th>
                                                             <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                                                 colspan="1" style={{width: "106px"}} aria-label="Enrolled: activate to sort column ascending">
                                                                 price</th>
-                                                            {/* <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                                            <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                                                 colspan="1" style={{width: "106px"}} aria-label="Enrolled: activate to sort column ascending">
-                                                                Edit</th> */}
+                                                                Edit</th>
                                                             <th scope="col" className="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                                                 colspan="1" style={{width: "106px"}} aria-label="Enrolled: activate to sort column ascending">
                                                                 Delete</th>
@@ -102,28 +116,9 @@ export const HouseTable = ({ manageMenuState }) => {
                                                     </thead>
                                                     <tbody>
                                                         {records.map((item, index) => {
-                                                            return <TableRow key={item._id} id={item._id} name={item.name} url={item.houseUrl} price={item.price} fetchRecords={fetchRecords}/>
+                                                            console.log(item.images)
+                                                            return <TableRow  key={item._id} id={item._id} name={item.name} images={item.images} url={item.houseUrl} description={item.description} price={item.price} fetchRecords={fetchRecords}/>
                                                         })}
-                                                        {/* <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" />
-                                                        <TableRow name="anonym" url="https://asdsad" price=" 125$" /> */}
                                                     </tbody>
                                                 </table>
                                             </div>

@@ -54,8 +54,9 @@ export const Home = () => {
                                     return <ApartmentCard
                                         key={item._id}
                                         id={item._id} 
-                                        name={item.houseUrl}
-                                        description={item.name}
+                                        houseUrl={item.houseUrl}
+                                        name={item.name}
+                                        description={item.description}
                                         price={item.price}
                                         imgLinks={item.images}
                                     />

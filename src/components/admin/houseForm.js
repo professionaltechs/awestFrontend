@@ -10,7 +10,8 @@ export const HouseForm = ({ manageMenuState }) => {
     const [houseUrl, setHouseUrl] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-    const [images, setImages] = useState('');
+    const [rooms, setRooms] = useState();
+    const [images, setImages] = useState([]);
     let navigate = useNavigate();
 
     const createHouse = async (e) => {
@@ -27,11 +28,11 @@ export const HouseForm = ({ manageMenuState }) => {
                 images
             }
         }).then(res => {
-            if(res.data.statusCode == 403){
+            if (res.data.statusCode == 403) {
                 navigate("/admin/login")
             }
             console.log(res)
-        }).catch(err => {console.log(err)})
+        }).catch(err => { console.log(err) })
 
         setName('');
         setHouseUrl('');
@@ -56,17 +57,17 @@ export const HouseForm = ({ manageMenuState }) => {
             });
             axios({
                 method: "post",
-                url: 'http://52.71.29.228/imageUpload',
+                url: 'https://backend.awestman.com/imageUpload',
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             })
-            .then(res => {
-                console.log(res)
-                setImages(res.data.message)
-                buttonEnable.current = false
-            }).catch(err => console.log(err))
+                .then(res => {
+                    console.log(res)
+                    setImages(res.data.message)
+                    buttonEnable.current = false
+                }).catch(err => console.log(err))
         }
     }
 
@@ -78,7 +79,7 @@ export const HouseForm = ({ manageMenuState }) => {
                     <span className="text"></span>
                 </div>
 
-                <div className="serach_field-area d-flex align-items-center">
+                {/* <div className="serach_field-area d-flex align-items-center">
                     <div className="search_inner">
                         <div className="search_field">
                             <input type="text" placeholder="Search here..." />
@@ -87,7 +88,7 @@ export const HouseForm = ({ manageMenuState }) => {
                             <img src="image/icon_search.svg" alt="" />
                         </button>
                     </div>
-                </div>
+                </div> */}
             </section>
             <div className="main_content_iner overly_inner" style={{ maxHeight: "calc(100vh - 76px)" }}>
                 <div className="container-fluid ">
@@ -126,9 +127,21 @@ export const HouseForm = ({ manageMenuState }) => {
                                                 <label className="form-label" for="inputState">Price</label>
                                                 <input value={price} onChange={(e) => setPrice(e.target.value)} type="text" className="form-control" id="inputAddress" placeholder="" />
                                             </div>
-                                            <div className=" col-12">
+                                            <div className="col-12">
                                                 <label className="form-label" for="inputCity">Description</label>
                                                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="form-control" style={{ height: '100px' }} rows="5" id="inputCity"></textarea>
+                                            </div>
+                                            <div className="col-4">
+                                                <label className="form-label">Number of bedrooms</label>
+                                                <input value={rooms} onChange={(e) => setRooms(Number(e.target.value))} type="number" className="form-control" id="inputAddress" placeholder="" />
+                                            </div>
+                                            <div className="col-4">
+                                                <label className="form-label" for="inputCity">stairs</label>
+                                                <select onChange={e => setStairs(e.target.value)} class="form-select" aria-label="Default select example">
+                                                    <option selected>select one</option>
+                                                    <option value="upstairs">upstairs</option>
+                                                    <option value="downstairs">downstairs</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-center mt-3">

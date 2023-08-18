@@ -157,12 +157,16 @@ a {
   display: block;
 }
 
+.sidebar .nav-links li {
+  margin: 4px 0;
+}
 .sidebar .nav-links li .sub-menu span {
   color: #fff;
-  font-size: 17px;
+  font-size: 18px;
+  
   padding: 5px 0;
   white-space: nowrap;
-  opacity: 0.6;
+  opacity: 0.8;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -546,6 +550,7 @@ table.dataTable td {
 
 .QA_section .QA_table tbody th,
 .QA_section .QA_table tbody td {
+  height: 40px;
   font-size: 14px;
   font-weight: 400;
   border-bottom: 0;
