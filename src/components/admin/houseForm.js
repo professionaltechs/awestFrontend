@@ -10,7 +10,8 @@ export const HouseForm = ({ manageMenuState }) => {
     const [houseUrl, setHouseUrl] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-    const [rooms, setRooms] = useState();
+    const [rooms, setRooms] = useState(0);
+    const [stairs, setStairs] = useState("");
     const [images, setImages] = useState([]);
     let navigate = useNavigate();
 

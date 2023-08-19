@@ -1,151 +1,222 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { ApartmentCard } from "../../components/user/ApartmentCard"
+import React, { useEffect, useRef, useState } from "react";
+import { ApartmentCard } from "../../components/user/ApartmentCard";
 // import styles
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-thumbnail.css";
-import { HomeBanner } from '../../components/user/homeBanner';
-import texasStar from "../../assets/images/texas_star.jpg"
-import { axiosInstance } from '../../axios';
-import { NavBar } from '../../components/user/NavBar';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
+import { HomeBanner } from "../../components/user/homeBanner";
+import texasStar from "../../assets/images/texas_star.jpg";
+import { axiosInstance } from "../../axios";
+import { NavBar } from "../../components/user/NavBar";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 export const Home = () => {
-    const [records, setRecords] = useState([])
-    const {width} = useWindowDimensions();
-    const fetchRecords = () => {
-        axiosInstance({
-            method: "post",
-            url: "apartment/get-all-apartments-user",
-        }).then(res => {
-            console.log(res.data.message)
-            setRecords(res.data.message)
-        }).catch(err => {
-            console.log(err)
-        })
+  const [records, setRecords] = useState([]);
+  const [totalRecords, setTotalRecords] = useState([]);
+  const [stairs, setStairs] = useState("");
+  const [numberOfRooms, setNumberOfRooms] = useState(-1);
+  const { width } = useWindowDimensions();
+  const fetchRecords = () => {
+    axiosInstance({
+      method: "post",
+      url: "apartment/get-all-apartments-user",
+    })
+      .then((res) => {
+        console.log(res.data.message);
+        setRecords(res.data.message);
+        setTotalRecords(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    fetchRecords();
+  }, []);
+  useEffect(() => {
+    if(numberOfRooms < 0 && stairs === ""){
+        setRecords(totalRecords)
+    }else if(numberOfRooms < 0){
+        setRecords(() => totalRecords.filter((item, index) => item.stairs === stairs))
+    }else if(stairs === ""){
+        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === numberOfRooms))
+    }else{
+        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === numberOfRooms || item.stairs === stairs))
     }
-    useEffect(() => {
-        fetchRecords()
-    }, [])
-    
+  }, [numberOfRooms, stairs]);
 
-    return (
-        <div>
-            <NavBar />
-            <HomeBanner />
+  const clearFilter = () => {
+    setStairs("")
+    setNumberOfRooms(-1)
+  }
 
-            {/* Floor plans */}
+  return (
+    <div>
+      <NavBar />
+      <HomeBanner />
 
-            <section className="section services second" id="units">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-12">
-                            <div className="section-title text-center">
-                                <h3 className="title text-uppercase mb-4">Units Available</h3>
+      {/* Floor plans */}
 
-                                <p className="mx-auto">
-                                    Enjoy a wide selection of amenities like a community picnic
-                                    area, vinyl plank floors, and tile floors. Contact us for more
-                                    info or stop by today!
-                                </p>
-                            </div>
+      <section className="section services second" id="units">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12">
+              <div className="section-title text-center">
+                <h3 className="title text-uppercase mb-4">Units Available</h3>
 
-                            <div className="row p-1">
-                                {records.map((item, index) => {
-                                    return <ApartmentCard
-                                        key={item._id}
-                                        id={item._id} 
-                                        houseUrl={item.houseUrl}
-                                        name={item.name}
-                                        description={item.description}
-                                        price={item.price}
-                                        imgLinks={item.images}
-                                    />
-                                })}
-
-                            </div>
-                        </div>
-                    </div>
+                <p className="mx-auto">
+                  Enjoy a wide selection of amenities like a community picnic
+                  area, vinyl plank floors, and tile floors. Contact us for more
+                  info or stop by today!
+                </p>
+              </div>
+              <div className="row p-1">
+                <div className="col-5">
+                  <label className="">Number of bedrooms</label>
+                  <input
+                    value={numberOfRooms < 0 ? null : numberOfRooms}
+                    onChange={(e) => setNumberOfRooms(Number(e.target.value))}
+                    type="number"
+                    className="form-control"
+                    placeholder="3"
+                  />
                 </div>
-            </section>
-
-            {/* Company Info*/}
-            <section className="section bg-white second">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4 mb-4">
-                            <div className="contact-detail text-center">
-                                <div className="icon"></div>
-
-                                <div className="content mt-3">
-                                    <h4 className="title text-uppercase">Phone</h4>
-
-                                    <p>
-                                        Office - General Information
-                                        <br />
-                                        <span className="text-custom">(409) 755-3333</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-4 mb-4">
-                            <div className="contact-detail text-center">
-                                <div className="icon"></div>
-
-                                <div className="content mt-3">
-                                    <h4 className="title text-uppercase"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-4 mb-4">
-                            <div className="contact-detail text-center">
-                                <div className="icon"></div>
-
-                                <div className="content mt-3">
-                                    <h4 className="title text-uppercase">Location</h4>
-
-                                    <p>
-                                        90 Williams Rd
-                                        <br />
-                                        Lumberton, TX 77657
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-12 mt-4">
-                            <div className="text-center justify-content-center">
-                                <img src={texasStar} style={{height: "auto", width: "100%", maxWidth: "350px"}} alt="" />
-                            </div>
-                        </div>
-                    </div>
+                <div className="col-5">
+                  <label className="" >
+                    stairs
+                  </label>
+                  <select
+                    value={stairs}
+                    onChange={(e) => setStairs(e.target.value)}
+                    class="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected>select one</option>
+                    <option value="upstairs">upstairs</option>
+                    <option value="downstairs">downstairs</option>
+                  </select>
                 </div>
-            </section>
+                <div className="col-2 d-flex align-items-end mb-3">
+                  <button className="btn btn-secondary" onClick={clearFilter}>Clear filter</button>
+                </div>
+              </div>
 
-            {/* Credit App Check*/}
-            <section className="section second" id="creditapp">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-8">
-                            <div id="script-form" className="custom-form mb-sm-30">
-                                {/* <script type="text/javascript" src="https://form.jotform.com/jsform/231890550656158"></script> */}
+              <div className="row p-1">
+                {records.map((item, index) => {
+                  return (
+                    <ApartmentCard
+                      key={item._id}
+                      id={item._id}
+                      houseUrl={item.houseUrl}
+                      name={item.name}
+                      description={item.description}
+                      price={item.price}
+                      imgLinks={item.images}
+                      numberOfBedrooms={item.numberOfBedrooms}
+                      stairs={item.stairs}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                                <iframe
-                                    id="JotFormIFrame-231797838365069"
-                                    title="f1"
-                                    onload="window.parent.scrollTo(0,0)"
-                                    allowtransparency="true"
-                                    allowfullscreen="true"
-                                    allow="geolocation; microphone; camera"
-                                    src="https://form.jotform.com/231797838365069"
-                                    frameborder="0"
-                                    style={{ minWidth: "100%", maxWidth: "100%", minHeight: width < 400 ?"410vh" : width < 550 ? "385vh" : width < 800 ? "360vh" : width < 1200 ? "345vh" : "320vh", border: "none" }}
-                                    scrolling="no"
-                                >
-                                </iframe>
+      {/* Company Info*/}
+      <section className="section bg-white second">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4 mb-4">
+              <div className="contact-detail text-center">
+                <div className="icon"></div>
 
-                                {/* <h1 id="creditMainHeading" className="text-center">
+                <div className="content mt-3">
+                  <h4 className="title text-uppercase">Phone</h4>
+
+                  <p>
+                    Office - General Information
+                    <br />
+                    <span className="text-custom">(409) 755-3333</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4 mb-4">
+              <div className="contact-detail text-center">
+                <div className="icon"></div>
+
+                <div className="content mt-3">
+                  <h4 className="title text-uppercase"></h4>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4 mb-4">
+              <div className="contact-detail text-center">
+                <div className="icon"></div>
+
+                <div className="content mt-3">
+                  <h4 className="title text-uppercase">Location</h4>
+
+                  <p>
+                    90 Williams Rd
+                    <br />
+                    Lumberton, TX 77657
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 mt-4">
+              <div className="text-center justify-content-center">
+                <img
+                  src={texasStar}
+                  style={{ height: "auto", width: "100%", maxWidth: "350px" }}
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Credit App Check*/}
+      <section className="section second" id="creditapp">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <div id="script-form" className="custom-form mb-sm-30">
+                {/* <script type="text/javascript" src="https://form.jotform.com/jsform/231890550656158"></script> */}
+
+                <iframe
+                  id="JotFormIFrame-231797838365069"
+                  title="f1"
+                  onload="window.parent.scrollTo(0,0)"
+                  allowtransparency="true"
+                  allowfullscreen="true"
+                  allow="geolocation; microphone; camera"
+                  src="https://form.jotform.com/231797838365069"
+                  frameborder="0"
+                  style={{
+                    minWidth: "100%",
+                    maxWidth: "100%",
+                    minHeight:
+                      width < 400
+                        ? "410vh"
+                        : width < 550
+                        ? "385vh"
+                        : width < 800
+                        ? "360vh"
+                        : width < 1200
+                        ? "345vh"
+                        : "320vh",
+                    border: "none",
+                  }}
+                  scrolling="no"
+                ></iframe>
+
+                {/* <h1 id="creditMainHeading" className="text-center">
                                     Credit App Background Check
                                 </h1>
                                 <p className="text-center">
@@ -687,11 +758,11 @@ export const Home = () => {
                                         </p>
                                     </div>
                                 </form> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section >
-        </div >
-    )
-}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
