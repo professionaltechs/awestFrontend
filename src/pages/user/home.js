@@ -21,7 +21,6 @@ export const Home = () => {
       url: "apartment/get-all-apartments-user",
     })
       .then((res) => {
-        console.log(res.data.message);
         setRecords(res.data.message);
         setTotalRecords(res.data.message);
       })
@@ -40,7 +39,7 @@ export const Home = () => {
     }else if(stairs === ""){
         setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === numberOfRooms))
     }else{
-        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === numberOfRooms || item.stairs === stairs))
+        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === numberOfRooms && item.stairs === stairs))
     }
   }, [numberOfRooms, stairs]);
 
@@ -87,7 +86,7 @@ export const Home = () => {
                   <select
                     value={stairs}
                     onChange={(e) => setStairs(e.target.value)}
-                    class="form-select"
+                    className="form-select"
                     aria-label="Default select example"
                   >
                     <option selected>select one</option>
@@ -96,7 +95,7 @@ export const Home = () => {
                   </select>
                 </div>
                 <div className="col-2 d-flex align-items-end mb-3">
-                  <button className="btn btn-secondary" onClick={clearFilter}>Clear filter</button>
+                  <button className="btn" style={{background: "#97786B", color: "white"}} onClick={clearFilter}>Clear filter</button>
                 </div>
               </div>
 

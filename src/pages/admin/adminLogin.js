@@ -24,7 +24,6 @@ export const AdminLogin = () => {
             localStorage.setItem("adminAwestToken", res.data.token)
             localStorage.setItem("isLoggedIn", true);
             navigate("/admin/")
-            console.log(res)
         }).catch(err => console.log(err))
     };
 

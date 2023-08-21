@@ -10,7 +10,7 @@ export const NavBar = () => {
         <img style={{height: "100%", width: "auto"}} src={awestLogo} alt="" />
         {width >= 600 ? <h3 className="title custom-txt">A-West Management</h3> : null}
         <a href='tel:(409) 755-3333'>
-          <button type='button' className="btn btn-info">Contact Us</button>
+          <button type='button' style={{background: "#97786B", color: "white"}} className="btn">Call Now</button>
         </a>
     </div>
   )

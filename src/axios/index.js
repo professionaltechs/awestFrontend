@@ -3,8 +3,7 @@ import axios from 'axios'
 const adminToken = () => localStorage.getItem('adminAwestToken')
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000/",  // local
-    // baseURL: "https://backend.awestman.com//", // live
+    baseURL: `${process.env.REACT_APP_BACKEND_BASEURL}`,
     headers: {
         "Content-Type": "application/json",
         "access-control-allow-origin": "*"
@@ -13,8 +12,7 @@ export const axiosInstance = axios.create({
 
 // for Admin
 export const axiosAuthInstance = axios.create({
-    baseURL: "http://localhost:5000/",
-    // baseURL: "https://backend.awestman.com//",
+    baseURL: `${process.env.REACT_APP_BACKEND_BASEURL}`,
     headers: {
         "Content-Type": "application/json",
         "access-control-allow-origin": "*",

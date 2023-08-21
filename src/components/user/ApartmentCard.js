@@ -12,47 +12,55 @@ export const ApartmentCard = ({
   price,
   houseUrl,
   imgLinks,
+  numberOfBedrooms,
+  stairs
 }) => {
   //imgLinks = []
   const buttonClick = useRef(null);
 
   return (
     <div className="col-lg-4 col-md-6 col-12 mb-4 pb-2">
-      <div>
         <div className="service-image rounded shadow">
-          <LightGallery speed={500} plugins={[lgThumbnail]}>
-            {imgLinks.map((item, index) => {
-              if (index == imgLinks.length - 1) {
+          <div style={{height: "200px", overflow: "hidden"}}>
+            <LightGallery speed={500} plugins={[lgThumbnail]}>
+              {imgLinks.map((item, index) => {
+                if (index == imgLinks.length - 1) {
+                  return (
+                    <a href={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}>
+                      <img
+                        ref={buttonClick}
+                        className="img-fluid d-block rounded-top"
+                        src={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}
+                        alt=""
+                      />
+                    </a>
+                  );
+                }
                 return (
-                  <a href={item}>
+                  <a className="gallery-item" href={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}>
                     <img
-                      ref={buttonClick}
                       className="img-fluid d-block rounded-top"
-                      src={item}
-                      alt="No"
+                      src={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}
+                      alt=""
                     />
                   </a>
                 );
-              }
-              return (
-                <a className="gallery-item" href={item}>
-                  <img
-                    className="img-fluid d-block rounded-top"
-                    src={item}
-                    alt="No"
-                  />
-                </a>
-              );
-            })}
-          </LightGallery>
-          <div style={{ width: "100%" }}>
-            <h3 className="title text-custom apartments text-center pt-4 my-0">
+              })}
+            </LightGallery>
+          </div>
+          <div style={{ width: "100%", height: "200px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <h3 className="title text-custom apartments text-center pt-1 my-0">
               {name}
             </h3>
             <h2 className="title text-custom apartments text-center my-0">
               {price}$
             </h2>
-            <p className="my-0 text-center">{description}</p>
+            <p style={{display: "-webkit-box", webkitLineClamp: "3",  lineHeight: "1.1", minHeight: "55px",webkitBoxOrient: "vertical", overflow: "hidden"}} className="my-2 px-4 text-center">{description}</p>
+            <div style={{display: "flex", justifyContent: "center", margin: "6px 0"}}>
+              {/* #AEAEAE */}
+              <button className="mx-1" style={{height: "30px", cursor: "default", background: "#AEAEAE", color: "white", border: "none", borderRadius: "10px", padding: "2px 8px"}}>{numberOfBedrooms} bedroom</button>
+              <button className="mx-1" style={{height: "30px", cursor: "default", background: "#AEAEAE", color: "white", border: "none", borderRadius: "10px", padding: "2px 8px"}}>{stairs}</button>
+            </div>
 
             <div style={{ width: "100%", display: "flex" }}>
               <button
@@ -61,8 +69,8 @@ export const ApartmentCard = ({
                 }}
                 target="_blank"
                 rel="noreferrer"
-                className="btn btn-secondary mr-1"
-                style={{ width: "50%" }}
+                className="btn mr-1"
+                style={{background: "#97786B", color: "white", width: "50%"}}
               >
                 Image Gallery
               </button>
@@ -71,8 +79,8 @@ export const ApartmentCard = ({
                 // href="https://my.matterport.com/show/?m=rQajr8vaFBH&amp;brand=0"
                 target="_blank"
                 rel="noreferrer"
-                className="btn btn-secondary"
-                style={{ width: "50%" }}
+                className="btn"
+                style={{background: "#97786B", color: "white", width: "50%"}}
               >
                 Virtual Tour
               </button>
@@ -80,7 +88,6 @@ export const ApartmentCard = ({
           </div>
 
         </div>
-      </div>
     </div>
   );
 };

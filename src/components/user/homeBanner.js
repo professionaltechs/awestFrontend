@@ -41,7 +41,7 @@ export const HomeBanner = () => {
 
                 <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 mb-4 pb-2" >
-                        <div className="service-image rounded shadow" style={{height: "400px"}}>
+                        <div className="service-image rounded shadow" style={{minHeight: "400px"}}>
                             <div className="image">
                                 <img
                                     className="img-fluid d-block rounded-top"
@@ -70,7 +70,7 @@ export const HomeBanner = () => {
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-12 mb-4 pb-2" >
-                        <div className="service-image rounded shadow" style={{height: "400px"}}>
+                        <div className="service-image rounded shadow" style={{minHeight: "400px"}}>
                             <div className="image">
                                 <img
                                     className="img-fluid d-block rounded-top"
@@ -100,7 +100,7 @@ export const HomeBanner = () => {
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-12 mb-4 pb-2" >
-                        <div className="service-image rounded shadow" style={{height: "400px"}}>
+                        <div className="service-image rounded shadow" style={{minHeight: "400px"}}>
                             <div className="image">
                                 <img
                                     className="img-fluid d-block rounded-top"

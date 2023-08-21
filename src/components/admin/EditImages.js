@@ -9,9 +9,7 @@ export const EditImages = ({ id, images, setOpenImages }) => {
     // const [newImages, setNewImages] = useState([])
 
     const deleteImg = (index) => {
-        console.log(index)
         const arr = image.filter((item, pos) => pos !== index)
-        console.log(arr)
         axiosAuthInstance({
             method: "post",
             url: "apartment/update-apartment-images",
@@ -21,7 +19,6 @@ export const EditImages = ({ id, images, setOpenImages }) => {
             }
         }).then(res => {
             setImage(res.data.message)
-            console.log("in")
         }).catch(err => {
             alert(err.message)
             console.log(err)
@@ -39,7 +36,6 @@ export const EditImages = ({ id, images, setOpenImages }) => {
             }
         }).then(res => {
             setImage(res.data.message)
-            console.log("in")
         }).catch(err => {
             alert(err.message)
             console.log(err)
@@ -49,13 +45,9 @@ export const EditImages = ({ id, images, setOpenImages }) => {
 
     const uploadFiles = async (filesList) => {
         const filesArray = [...filesList]
-
-        console.log(filesList)
-        console.log(filesArray)
         if (filesArray) {
             const formData = new FormData()
             filesArray.forEach(file => {
-                console.log(file)
                 formData.append(
                     'image',
                     file,
@@ -64,15 +56,13 @@ export const EditImages = ({ id, images, setOpenImages }) => {
             });
             axios({
                 method: "post",
-                // url: 'https://backend.awestman.com/imageUpload',
-                url: 'http://localhost:5000/imageUpload',
+                url: `${process.env.REACT_APP_BACKEND_BASEURL}/imageUpload`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             })
                 .then(res => {
-                    console.log(res)
                     addMore(res.data.message)
                 }).catch(err => console.log(err))
         }
@@ -87,7 +77,7 @@ export const EditImages = ({ id, images, setOpenImages }) => {
                 {image.map((item, index) => {
                     return <div style={{ width: "32%", padding: "4px 10px", position: "relative" }}>
                         <div onClick={() => deleteImg(index)} style={{ position: "absolute", top: "0px", right: "0px" }}><button className='btn btn-danger'>delete</button></div>
-                        <img src={item} alt="" style={{ width: "100%", height: "auto" }} />
+                        <img src={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`} alt="" style={{ width: "100%", height: "auto" }} />
                     </div>
                 })}
                 <div className="col-md-12">

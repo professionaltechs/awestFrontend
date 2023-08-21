@@ -18,6 +18,11 @@ export const HouseForm = ({ manageMenuState }) => {
     const createHouse = async (e) => {
         e.preventDefault()
 
+        if(images.length == 0){
+            alert("Please upload images")
+            return
+        }
+
         axiosAuthInstance({
             method: "post",
             url: "apartment/add-apartment",
@@ -26,13 +31,14 @@ export const HouseForm = ({ manageMenuState }) => {
                 houseUrl,
                 price,
                 description,
-                images
+                images,
+                stairs,
+                numberOfBedrooms: rooms
             }
         }).then(res => {
             if (res.data.statusCode == 403) {
                 navigate("/admin/login")
             }
-            console.log(res)
         }).catch(err => { console.log(err) })
 
         setName('');
@@ -43,13 +49,9 @@ export const HouseForm = ({ manageMenuState }) => {
 
     const uploadFiles = async (filesList) => {
         const filesArray = [...filesList]
-
-        console.log(filesList)
-        console.log(filesArray)
         if (filesArray) {
             const formData = new FormData()
             filesArray.forEach(file => {
-                console.log(file)
                 formData.append(
                     'image',
                     file,
@@ -58,7 +60,8 @@ export const HouseForm = ({ manageMenuState }) => {
             });
             axios({
                 method: "post",
-                url: 'https://backend.awestman.com/imageUpload',
+                // url: 'https://backend.awestman.com/imageUpload',
+                url: `${process.env.REACT_APP_BACKEND_BASEURL}imageUpload`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -146,7 +149,7 @@ export const HouseForm = ({ manageMenuState }) => {
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-center mt-3">
-                                            <button disabled={buttonEnable.current} type="button" onClick={createHouse} className="btn-primary px-5">Submit</button>
+                                            <button style={{background: "#64C5B1", color: "white"}} type="button" onClick={createHouse} className="btn px-5">Submit</button>
                                         </div>
                                     </div>
                                 </div>

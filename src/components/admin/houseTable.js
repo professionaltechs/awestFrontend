@@ -22,7 +22,6 @@ export const HouseTable = ({ manageMenuState }) => {
             if(res.data.statusCode == 403){
                 navigate("/admin/login")
             }
-            console.log(res.data.message)
             setRecords(res.data.message)
             setTotalRecords(res.data.message)
         }).catch(err => {
@@ -116,7 +115,6 @@ export const HouseTable = ({ manageMenuState }) => {
                                                     </thead>
                                                     <tbody>
                                                         {records.map((item, index) => {
-                                                            console.log(item.images)
                                                             return <TableRow  key={item._id} id={item._id} name={item.name} images={item.images} url={item.houseUrl} description={item.description} price={item.price} fetchRecords={fetchRecords}/>
                                                         })}
                                                     </tbody>

@@ -35,7 +35,6 @@ export const EditModal = ({ id, hname, hprice, hhouseUrl, hdescription, himages,
             if (res.data.statusCode == 403) {
                 navigate("/admin/login")
             }
-            console.log(res)
             setOpen(false)
         }).catch(err => { console.log(err) })
     }
