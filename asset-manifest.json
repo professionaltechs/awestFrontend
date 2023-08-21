@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7a92ac4d.css",
-    "main.js": "/static/js/main.837ea7e7.js",
+    "main.css": "/static/css/main.b1121ff8.css",
+    "main.js": "/static/js/main.516d4e70.js",
     "static/js/787.688b5922.chunk.js": "/static/js/787.688b5922.chunk.js",
     "static/media/aw32-14.jpg": "/static/media/aw32-14.003b010f468ae1e1882b.jpg",
     "static/media/timberwood-apartments.jpg": "/static/media/timberwood-apartments.593a0d81f99a404dc87f.jpg",
@@ -14,12 +14,12 @@
     "static/media/lg.ttf?io9a6k": "/static/media/lg.747d038541bfc6bb8ea9.ttf",
     "static/media/lg.woff2?io9a6k": "/static/media/lg.64b800aa30714fd916dc.woff2",
     "index.html": "/index.html",
-    "main.7a92ac4d.css.map": "/static/css/main.7a92ac4d.css.map",
-    "main.837ea7e7.js.map": "/static/js/main.837ea7e7.js.map",
+    "main.b1121ff8.css.map": "/static/css/main.b1121ff8.css.map",
+    "main.516d4e70.js.map": "/static/js/main.516d4e70.js.map",
     "787.688b5922.chunk.js.map": "/static/js/787.688b5922.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7a92ac4d.css",
-    "static/js/main.837ea7e7.js"
+    "static/css/main.b1121ff8.css",
+    "static/js/main.516d4e70.js"
   ]
 }
