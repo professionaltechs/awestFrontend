@@ -56,7 +56,7 @@ export const EditImages = ({ id, images, setOpenImages }) => {
             });
             axios({
                 method: "post",
-                url: `${process.env.REACT_APP_BACKEND_BASEURL}/imageUpload`,
+                url: `https://backend.awestman.com/imageUpload`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -77,7 +77,7 @@ export const EditImages = ({ id, images, setOpenImages }) => {
                 {image.map((item, index) => {
                     return <div style={{ width: "32%", padding: "4px 10px", position: "relative" }}>
                         <div onClick={() => deleteImg(index)} style={{ position: "absolute", top: "0px", right: "0px" }}><button className='btn btn-danger'>delete</button></div>
-                        <img src={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`} alt="" style={{ width: "100%", height: "auto" }} />
+                        <img src={`https://backend.awestman.com/${item}`} alt="" style={{ width: "100%", height: "auto" }} />
                     </div>
                 })}
                 <div className="col-md-12">

@@ -26,21 +26,21 @@ export const ApartmentCard = ({
               {imgLinks.map((item, index) => {
                 if (index == imgLinks.length - 1) {
                   return (
-                    <a href={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}>
+                    <a href={`https://backend.awestman.com/${item}`}>
                       <img
                         ref={buttonClick}
                         className="img-fluid d-block rounded-top"
-                        src={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}
+                        src={`https://backend.awestman.com/${item}`}
                         alt=""
                       />
                     </a>
                   );
                 }
                 return (
-                  <a className="gallery-item" href={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}>
+                  <a className="gallery-item" href={`https://backend.awestman.com/${item}`}>
                     <img
                       className="img-fluid d-block rounded-top"
-                      src={`${process.env.REACT_APP_BACKEND_BASEURL}${item}`}
+                      src={`https://backend.awestman.com/${item}`}
                       alt=""
                     />
                   </a>

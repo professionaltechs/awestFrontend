@@ -61,7 +61,7 @@ export const HouseForm = ({ manageMenuState }) => {
             axios({
                 method: "post",
                 // url: 'https://backend.awestman.com/imageUpload',
-                url: `${process.env.REACT_APP_BACKEND_BASEURL}imageUpload`,
+                url: `https://backend.awestman.com/imageUpload`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data"
