@@ -17,6 +17,7 @@ export const ApartmentCard = ({
   //imgLinks = []
   const buttonClick = useRef(null);
 
+
   return (
     <div className="col-lg-4 col-md-6 col-12 mb-4 pb-2">
         <div className="service-image rounded shadow">
