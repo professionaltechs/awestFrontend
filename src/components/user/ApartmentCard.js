@@ -53,7 +53,7 @@ export const ApartmentCard = ({
               {name}
             </h3>
             <h2 className="title text-custom apartments text-center my-0">
-              {price}$
+            ${price}
             </h2>
             <p style={{display: "-webkit-box", webkitLineClamp: "3",  lineHeight: "1.1", minHeight: "55px",webkitBoxOrient: "vertical", overflow: "hidden"}} className="my-2 px-4 text-center">{description}</p>
             <div style={{display: "flex", justifyContent: "center", flexWrap: "wrap", margin: "6px 0"}}>
