@@ -35,7 +35,7 @@ export const HouseForm = ({ manageMenuState }) => {
         images,
         stairs,
         numberOfBedrooms: rooms,
-        complex
+        complex,
       },
     })
       .then((res) => {
@@ -130,7 +130,7 @@ export const HouseForm = ({ manageMenuState }) => {
                               type="file"
                               id="imgUpload"
                               multiple
-                              accept="image/*"
+                              accept="image/*, video/*"
                               onChange={(e) => {
                                 uploadFiles(e.target.files);
                               }}
@@ -200,7 +200,9 @@ export const HouseForm = ({ manageMenuState }) => {
                         </select>
                       </div>
                       <div className="col-10 col-sm-4 my-2 my-sm-0">
-                        <label className="form-label">upstairs/downstairs</label>
+                        <label className="form-label">
+                          upstairs/downstairs
+                        </label>
                         <select
                           value={stairs}
                           onChange={(e) => setStairs(e.target.value)}
