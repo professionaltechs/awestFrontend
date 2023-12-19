@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 const CustomerForm = ({ manageMenuState }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(
+      firstName,
+      lastName,
+      nationality,
+      dateOfBirth,
+      address,
+      email,
+      phone
+    );
+  };
+
   return (
     <>
       <section className="home-section">
@@ -39,6 +60,8 @@ const CustomerForm = ({ manageMenuState }) => {
                           type="text"
                           className="form-control"
                           id="firstName"
+                          name="first_name"
+                          onChange={(e) => setFirstName(e.target.value)}
                         />
                       </div>
                       <div className="col-md-6">
@@ -49,6 +72,8 @@ const CustomerForm = ({ manageMenuState }) => {
                           type="text"
                           className="form-control"
                           id="lastName"
+                          name="last_name"
+                          onChange={(e) => setLastName(e.target.value)}
                         />
                       </div>
                       <div className="col-12">
@@ -59,6 +84,8 @@ const CustomerForm = ({ manageMenuState }) => {
                           type="text"
                           className="form-control"
                           id="nationality"
+                          name="nationality"
+                          onChange={(e) => setNationality(e.target.value)}
                         />
                       </div>
                       <div className="col-12">
@@ -69,6 +96,7 @@ const CustomerForm = ({ manageMenuState }) => {
                           type="date"
                           className="form-control"
                           id="birthDate"
+                          onChange={(e) => setDateOfBirth(e.target.value)}
                         />
                       </div>
                       <div className="col-12">
@@ -79,6 +107,7 @@ const CustomerForm = ({ manageMenuState }) => {
                           className="form-control"
                           style={{ height: "100px" }}
                           id="address"
+                          onChange={(e) => setAddress(e.target.value)}
                         ></textarea>
                       </div>
                       <div className="col-12">
@@ -89,13 +118,19 @@ const CustomerForm = ({ manageMenuState }) => {
                           type="email"
                           className="form-control"
                           id="email"
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className="col-12">
                         <label className="form-label" htmlFor="phone">
                           Phone
                         </label>
-                        <input type="tel" className="form-control" id="phone" />
+                        <input
+                          type="tel"
+                          className="form-control"
+                          id="phone"
+                          onChange={(e) => setPhone(e.target.value)}
+                        />
                       </div>
                     </div>
                     <div className="d-flex justify-content-center mt-3">
@@ -103,6 +138,7 @@ const CustomerForm = ({ manageMenuState }) => {
                         style={{ background: "#64C5B1", color: "white" }}
                         type="button"
                         className="btn px-5"
+                        onClick={handleSubmit}
                       >
                         Submit
                       </button>
