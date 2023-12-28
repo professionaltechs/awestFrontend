@@ -1,7 +1,29 @@
-import React from "react";
-import { TableRow } from "./tableRow";
+import React, { useEffect, useState } from "react";
+import { axiosAuthInstance } from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const CustomerList = ({ manageMenuState }) => {
+  const navigate = useNavigate();
+  const [customerList, setcustomerList] = useState([]);
+
+  const fetchCustomers = () => {
+    axiosAuthInstance({
+      method: "post",
+      url: "http://localhost:5000/admin/getAllusers",
+    })
+      .then((res) => {
+        if (res.data.statusCode == 403) {
+          navigate("/admin/login");
+        }
+        setcustomerList(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
   return (
     <>
       <section className="home-section">
@@ -73,67 +95,6 @@ const CustomerList = ({ manageMenuState }) => {
                             <tr role="row">
                               <th
                                 scope="col"
-                                className="sorting_asc"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "127px" }}
-                                aria-sort="ascending"
-                                aria-label="title: activate to sort column descending"
-                              >
-                                First Name
-                              </th>
-                              <th
-                                scope="col"
-                                className="sorting"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "182px" }}
-                                aria-label="Category: activate to sort column ascending"
-                              >
-                                Last Name
-                              </th>
-                              <th
-                                scope="col"
-                                className="sorting"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "171px" }}
-                                aria-label="Lesson: activate to sort column ascending"
-                              >
-                                Nationality
-                              </th>
-                              <th
-                                scope="col"
-                                className="sorting"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "106px" }}
-                                aria-label="Enrolled: activate to sort column ascending"
-                              >
-                                Birth Date
-                              </th>
-                              <th
-                                scope="col"
-                                className="sorting"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "106px" }}
-                                aria-label="Enrolled: activate to sort column ascending"
-                              >
-                                Address
-                              </th>
-                              <th
-                                scope="col"
                                 className="sorting"
                                 tabindex="0"
                                 aria-controls="DataTables_Table_1"
@@ -154,75 +115,15 @@ const CustomerList = ({ manageMenuState }) => {
                                 style={{ width: "106px" }}
                                 aria-label="Enrolled: activate to sort column ascending"
                               >
-                                Phone
-                              </th>
-                              <th
-                                scope="col"
-                                className="sorting"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "106px" }}
-                                aria-label="Enrolled: activate to sort column ascending"
-                              >
-                                Edit
-                              </th>
-                              <th
-                                scope="col"
-                                className="sorting"
-                                tabindex="0"
-                                aria-controls="DataTables_Table_1"
-                                rowspan="1"
-                                colspan="1"
-                                style={{ width: "106px" }}
-                                aria-label="Enrolled: activate to sort column ascending"
-                              >
-                                Delete
+                                Type
                               </th>
                             </tr>
                           </thead>
                           <tbody>
-                            {[
-                              {
-                                firstName: "John",
-                                lastName: "Doe",
-                                nationality: "US",
-                                birthDate: "1990-01-01",
-                                address: "123 Main St, Cityville",
-                                email: "john.doe@example.com",
-                                phone: "123-456-7890",
-                              },
-                              {
-                                firstName: "Jane",
-                                lastName: "Doe",
-                                nationality: "Canada",
-                                birthDate: "1992-05-15",
-                                address: "456 Oak St, Townsville",
-                                email: "jane.doe@example.com",
-                                phone: "987-654-3210",
-                              },
-                              // Add more fake data entries as needed
-                            ].map((customer, index) => (
+                            {customerList.map((customer, index) => (
                               <tr role="row" className="odd" key={index}>
-                                <td>{customer.firstName}</td>
-                                <td>{customer.lastName}</td>
-                                <td>{customer.address}</td>
-                                <td>{customer.birthDate}</td>
-                                <td>{customer.phone}</td>
                                 <td>{customer.email}</td>
-                                <td>
-                                  <i
-                                    style={{ cursor: "pointer" }}
-                                    className="fa-solid fa-pen-to-square"
-                                  ></i>
-                                </td>
-                                <td>
-                                  <i
-                                    style={{ cursor: "pointer" }}
-                                    className="fa-solid fa-trash"
-                                  ></i>
-                                </td>
+                                <td>{customer.type}</td>
                               </tr>
                             ))}
                           </tbody>

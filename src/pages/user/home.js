@@ -33,30 +33,57 @@ export const Home = () => {
     fetchRecords();
   }, []);
   useEffect(() => {
-    if(bedrooms === "" && stairs === "" && complex === ""){
-        setRecords(totalRecords)
-    }else if(bedrooms === "" && complex === ""){
-        setRecords(() => totalRecords.filter((item, index) => item.stairs === stairs))
-    }else if(stairs === "" && complex === ""){
-        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === bedrooms))
-    }else if(stairs === "" && bedrooms === ""){
-        setRecords(() => totalRecords.filter((item, index) => item.complex === complex))
-    }else if(bedrooms === ""){
-        setRecords(() => totalRecords.filter((item, index) => item.stairs === stairs && item.complex === complex))
-    }else if(stairs === ""){
-        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === bedrooms && item.complex === complex))
-    }else if(complex === ""){
-        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === bedrooms && item.stairs === stairs))
-    }else{
-        setRecords(() => totalRecords.filter((item, index) => item.numberOfBedrooms === bedrooms && item.stairs === stairs && item.complex === complex))
+    if (bedrooms === "" && stairs === "" && complex === "") {
+      setRecords(totalRecords);
+    } else if (bedrooms === "" && complex === "") {
+      setRecords(() =>
+        totalRecords.filter((item, index) => item.stairs === stairs)
+      );
+    } else if (stairs === "" && complex === "") {
+      setRecords(() =>
+        totalRecords.filter((item, index) => item.numberOfBedrooms === bedrooms)
+      );
+    } else if (stairs === "" && bedrooms === "") {
+      setRecords(() =>
+        totalRecords.filter((item, index) => item.complex === complex)
+      );
+    } else if (bedrooms === "") {
+      setRecords(() =>
+        totalRecords.filter(
+          (item, index) => item.stairs === stairs && item.complex === complex
+        )
+      );
+    } else if (stairs === "") {
+      setRecords(() =>
+        totalRecords.filter(
+          (item, index) =>
+            item.numberOfBedrooms === bedrooms && item.complex === complex
+        )
+      );
+    } else if (complex === "") {
+      setRecords(() =>
+        totalRecords.filter(
+          (item, index) =>
+            item.numberOfBedrooms === bedrooms && item.stairs === stairs
+        )
+      );
+    } else {
+      setRecords(() =>
+        totalRecords.filter(
+          (item, index) =>
+            item.numberOfBedrooms === bedrooms &&
+            item.stairs === stairs &&
+            item.complex === complex
+        )
+      );
     }
   }, [bedrooms, stairs, complex]);
 
   const clearFilter = () => {
-    setStairs("")
-    setComplex("")
-    setBedrooms("")
-  }
+    setStairs("");
+    setComplex("");
+    setBedrooms("");
+  };
 
   return (
     <div>
@@ -80,53 +107,59 @@ export const Home = () => {
               </div>
               <div className="row p-1 justify-content-center">
                 <div className="col-10 col-sm-4 my-2 my-sm-0">
-                  <label className="" >
-                    complex
-                  </label>
+                  <label className="">complex</label>
                   <select
                     value={complex}
                     onChange={(e) => setComplex(e.target.value)}
                     className="form-select"
                     aria-label="Default select example"
                   >
-                    <option value="" selected>select one</option>
+                    <option value="" selected>
+                      select one
+                    </option>
                     <option value="Austin West">Austin West</option>
                     <option value="Stagecoach West">Stagecoach West</option>
                     <option value="Timberwood">Timberwood</option>
                   </select>
                 </div>
                 <div className="col-10 col-sm-4 my-2 my-sm-0">
-                  <label className="" >
-                    upstairs/downstairs
-                  </label>
+                  <label className="">upstairs/downstairs</label>
                   <select
                     value={stairs}
                     onChange={(e) => setStairs(e.target.value)}
                     className="form-select"
                     aria-label="Default select example"
                   >
-                    <option value="" selected>select one</option>
+                    <option value="" selected>
+                      select one
+                    </option>
                     <option value="upstairs">upstairs</option>
                     <option value="downstairs">downstairs</option>
                   </select>
                 </div>
                 <div className="col-10 col-sm-4 my-2 my-sm-0">
-                  <label className="" >
-                    bedrooms
-                  </label>
+                  <label className="">bedrooms</label>
                   <select
                     value={bedrooms}
                     onChange={(e) => setBedrooms(e.target.value)}
                     className="form-select"
                     aria-label="Default select example"
                   >
-                    <option value="" selected>select one</option>
+                    <option value="" selected>
+                      select one
+                    </option>
                     <option value="one bedroom">one bedroom</option>
                     <option value="two bedrooms">two bedrooms</option>
                   </select>
                 </div>
                 <div className="col-5 col-sm-3 d-flex align-items-end my-3">
-                  <button className="btn" style={{background: "#97786B", color: "white"}} onClick={clearFilter}>Clear filter</button>
+                  <button
+                    className="btn"
+                    style={{ background: "#97786B", color: "white" }}
+                    onClick={clearFilter}
+                  >
+                    Clear filter
+                  </button>
                 </div>
               </div>
 

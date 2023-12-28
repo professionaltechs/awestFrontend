@@ -1,25 +1,48 @@
 import React, { useState } from "react";
+import { axiosAuthInstance } from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const CustomerForm = ({ manageMenuState }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [password, setPass] = useState("");
+  const [confirmPassword, setConfirmPass] = useState("");
+  const [type, setType] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(
-      firstName,
-      lastName,
-      nationality,
-      dateOfBirth,
-      address,
-      email,
-      phone
-    );
+
+    if (
+      password === confirmPassword &&
+      (type.toLowerCase() === "admin" || type.toLowerCase() === "user")
+    ) {
+      // console.log({
+      //   email,
+      //   password,
+      //   confirmPassword,
+      //   type,
+      // });
+      axiosAuthInstance({
+        method: "post",
+        url: "/admin/createUser",
+        data: {
+          email,
+          password,
+          type,
+        },
+      })
+        .then((res) => {
+          if (res.data.statusCode == 403) {
+            navigate("/admin/login");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("wrong");
+    }
   };
 
   return (
@@ -52,64 +75,6 @@ const CustomerForm = ({ manageMenuState }) => {
                 <div className="">
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-md-6">
-                        <label className="form-label" htmlFor="firstName">
-                          First Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="firstName"
-                          name="first_name"
-                          onChange={(e) => setFirstName(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <label className="form-label" htmlFor="lastName">
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="lastName"
-                          name="last_name"
-                          onChange={(e) => setLastName(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="nationality">
-                          Nationality
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="nationality"
-                          name="nationality"
-                          onChange={(e) => setNationality(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="birthDate">
-                          Birth Date
-                        </label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          id="birthDate"
-                          onChange={(e) => setDateOfBirth(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-12">
-                        <label className="form-label" htmlFor="address">
-                          Address
-                        </label>
-                        <textarea
-                          className="form-control"
-                          style={{ height: "100px" }}
-                          id="address"
-                          onChange={(e) => setAddress(e.target.value)}
-                        ></textarea>
-                      </div>
                       <div className="col-12">
                         <label className="form-label" htmlFor="email">
                           Email
@@ -122,14 +87,37 @@ const CustomerForm = ({ manageMenuState }) => {
                         />
                       </div>
                       <div className="col-12">
-                        <label className="form-label" htmlFor="phone">
-                          Phone
+                        <label className="form-label" htmlFor="password">
+                          Password
                         </label>
                         <input
-                          type="tel"
+                          type="password"
                           className="form-control"
-                          id="phone"
-                          onChange={(e) => setPhone(e.target.value)}
+                          id="password"
+                          onChange={(e) => setPass(e.target.value)}
+                        />
+                      </div>
+                      <div className="col-6">
+                        <label className="form-label" htmlFor="confirmPassword">
+                          Confirm Password
+                        </label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="confirmPassword"
+                          onChange={(e) => setConfirmPass(e.target.value)}
+                        />
+                      </div>
+                      <div className="col-6">
+                        <label className="form-label" htmlFor="type">
+                          type
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Admin or User"
+                          className="form-control"
+                          id="type"
+                          onChange={(e) => setType(e.target.value)}
                         />
                       </div>
                     </div>

@@ -206,7 +206,7 @@ export const HouseTable = ({ manageMenuState }) => {
                                   bedrooms={item.numberOfBedrooms}
                                   stairs={item.stairs}
                                   complex={item.complex}
-                                  fetchRecords={fetchRecords} 
+                                  fetchRecords={fetchRecords}
                                 />
                               );
                             })}

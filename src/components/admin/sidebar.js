@@ -46,8 +46,9 @@ export const Sidebar = ({ menuState }) => {
             }}
           >
             <Link to="#">
-              <i className="bx bx-collection"></i>
-              {menuState ? <span className="link_name">Customer</span> : null}
+              <i className="bx bx-user"></i>
+
+              {menuState ? <span className="link_name">User</span> : null}
             </Link>
             <i className="bx bxs-chevron-down arrow"></i>
           </div>
