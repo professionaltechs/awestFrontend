@@ -69,7 +69,7 @@ const CustomerList = ({ manageMenuState }) => {
                       <div className="box_right d-flex lms_block">
                         <div className="add_button ms-2">
                           <a
-                            href="/admin"
+                            href="/admin/create-customer"
                             data-bs-toggle="modal"
                             data-bs-target="#addcategory"
                             className="btn_1 "

@@ -6,30 +6,19 @@ const CustomerForm = ({ manageMenuState }) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [confirmPassword, setConfirmPass] = useState("");
-  const [type, setType] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (
-      password === confirmPassword &&
-      (type.toLowerCase() === "admin" || type.toLowerCase() === "user")
-    ) {
-      // console.log({
-      //   email,
-      //   password,
-      //   confirmPassword,
-      //   type,
-      // });
+    if (password === confirmPassword) {
       axiosAuthInstance({
         method: "post",
         url: "/admin/createUser",
         data: {
           email,
           password,
-          type,
         },
       })
         .then((res) => {
@@ -97,7 +86,7 @@ const CustomerForm = ({ manageMenuState }) => {
                           onChange={(e) => setPass(e.target.value)}
                         />
                       </div>
-                      <div className="col-6">
+                      <div className="col-12">
                         <label className="form-label" htmlFor="confirmPassword">
                           Confirm Password
                         </label>
@@ -106,18 +95,6 @@ const CustomerForm = ({ manageMenuState }) => {
                           className="form-control"
                           id="confirmPassword"
                           onChange={(e) => setConfirmPass(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-6">
-                        <label className="form-label" htmlFor="type">
-                          type
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Admin or User"
-                          className="form-control"
-                          id="type"
-                          onChange={(e) => setType(e.target.value)}
                         />
                       </div>
                     </div>
