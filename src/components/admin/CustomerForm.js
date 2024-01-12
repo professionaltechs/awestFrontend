@@ -12,25 +12,32 @@ const CustomerForm = ({ manageMenuState }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (password === confirmPassword) {
-      axiosAuthInstance({
-        method: "post",
-        url: "/admin/createUser",
-        data: {
-          email,
-          password,
-        },
-      })
-        .then((res) => {
-          if (res.data.statusCode == 403) {
-            navigate("/admin/login");
-          }
+    const admin = localStorage.getItem("adminAwestToken");
+
+    if (admin) {
+      if (password === confirmPassword) {
+        axiosAuthInstance({
+          method: "post",
+          url: "/admin/createUser",
+          data: {
+            email,
+            password,
+          },
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((res) => {
+            // if (res.data.statusCode == 403) {
+            //   navigate("/admin/login");
+            // }
+            alert(res.data.status);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        alert("wrong");
+      }
     } else {
-      alert("wrong");
+      alert("not logged in");
     }
   };
 

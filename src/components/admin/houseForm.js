@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import { axiosAuthInstance, axiosInstance } from "../../axios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,38 +14,41 @@ export const HouseForm = ({ manageMenuState }) => {
   const [complex, setComplex] = useState("");
   const [stairs, setStairs] = useState("");
   const [images, setImages] = useState([]);
+  const [video, setVideo] = useState([]);
+
   let navigate = useNavigate();
 
   const createHouse = async (e) => {
     e.preventDefault();
+
 
     if (images.length == 0) {
       alert("Please upload images");
       return;
     }
 
-    axiosAuthInstance({
-      method: "post",
-      url: "apartment/add-apartment",
-      data: {
-        name,
-        houseUrl,
-        price,
-        description,
-        images,
-        stairs,
-        numberOfBedrooms: rooms,
-        complex,
-      },
-    })
-      .then((res) => {
-        if (res.data.statusCode == 403) {
-          navigate("/admin/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axiosAuthInstance({
+    //   method: "post",
+    //   url: "apartment/add-apartment",
+    //   data: {
+    //     name,
+    //     houseUrl,
+    //     price,
+    //     description,
+    //     images,
+    //     stairs,
+    //     numberOfBedrooms: rooms,
+    //     complex,
+    //   },
+    // })
+    //   .then((res) => {
+    //     if (res.data.statusCode == 403) {
+    //       navigate("/admin/login");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     setName("");
     setHouseUrl("");
@@ -56,29 +59,12 @@ export const HouseForm = ({ manageMenuState }) => {
     setStairs("");
   };
 
-  const uploadFiles = async (filesList) => {
-    const filesArray = [...filesList];
-    if (filesArray) {
-      const formData = new FormData();
-      filesArray.forEach((file) => {
-        formData.append("image", file, file.name);
-      });
-      axios({
-        method: "post",
-        // url: 'https://backend.awestman.com/imageUpload',
-        url: `https://backend.awestman.com/imageUpload`,
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-        .then((res) => {
-          setImages(res.data.message);
-          buttonEnable.current = false;
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+  const uploadImage = (imageList) => {
+    // const ''
+  }
+  const uploadFiles = () => {
+
+  }
 
   return (
     <>
@@ -111,6 +97,47 @@ export const HouseForm = ({ manageMenuState }) => {
                   <div className="card-body">
                     <div className="row">
                       <div className="col-md-6">
+                        <div id="dropBox">
+                          <p>Drag & Drop Images Here...</p>
+                          <form className="imgUploader">
+                            <input
+                              type="file"
+                              id="imgUpload"
+                              multiple
+                              accept="*.png, *.gif, *.jpeg"
+                              onChange={(e) => {
+                                uploadImage(e.target.files);
+                              }}
+                            />
+                            <label className="button" for="imgUpload">
+                              ...or Upload From Your Computer
+                            </label>
+                          </form>
+                          <div id="gallery"></div>
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <div id="dropBox">
+                          <p>Drag & Drop Videos Here...</p>
+                          <form className="imgUploader">
+                            <input
+                              type="file"
+                              id="imgUpload"
+                              multiple
+                              accept="videos/*"
+                              onChange={(e) => {
+                                uploadFiles(e.target.files, images);
+                              }}
+                            />
+                            <label className="button" for="imgUpload">
+                              ...or Upload From Your Computer
+                            </label>
+                          </form>
+                          <div id="gallery"></div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 mt-md-4">
                         <label className="form-label" for="inputEmail4">
                           Name
                         </label>
@@ -121,26 +148,6 @@ export const HouseForm = ({ manageMenuState }) => {
                           className="form-control"
                           id="inputEmail4"
                         />
-                      </div>
-                      <div className="col-md-6">
-                        <div id="dropBox">
-                          <p>Drag & Drop Images Here...</p>
-                          <form className="imgUploader">
-                            <input
-                              type="file"
-                              id="imgUpload"
-                              multiple
-                              accept="image/*, video/*"
-                              onChange={(e) => {
-                                uploadFiles(e.target.files);
-                              }}
-                            />
-                            <label className="button" for="imgUpload">
-                              ...or Upload From Your Computer
-                            </label>
-                          </form>
-                          <div id="gallery"></div>
-                        </div>
                       </div>
                       <div className="col-12">
                         <label className="form-label" for="inputAddress">
@@ -252,3 +259,23 @@ export const HouseForm = ({ manageMenuState }) => {
     </>
   );
 };
+// const filesArray = [...filesList];
+// if (filesArray) {
+//   const formData = new FormData();
+//   filesArray.forEach((file) => {
+//     formData.append("file", file, file.name);
+//   });
+//   axios({
+//     method: "post",
+//     url: `https://backend.awestman.com/imageUpload`,
+//     data: formData,
+//     headers: {
+//       "Content-Type": "multipart/form-data",
+//     },
+//   })
+//     .then((res) => {
+//       setImages(res.data.message);
+//       buttonEnable.current = false;
+//     })
+//     .catch((err) => console.log(err));
+// }
