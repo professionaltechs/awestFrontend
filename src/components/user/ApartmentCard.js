@@ -37,13 +37,16 @@ export const ApartmentCard = ({
                   );
                 }
                 return (
-                  <a className="gallery-item" href={`https://backend.awestman.com/${item}`}>
+                  <>
+                    <a className="gallery-item" href={`https://backend.awestman.com/${item}`}>
                     <img
                       className="img-fluid d-block rounded-top"
                       src={`https://backend.awestman.com/${item}`}
                       alt=""
                     />
                   </a>
+                  <p>{`https://backend.awestman.com/${item}`}</p>
+                  </>
                 );
               })}
             </LightGallery>

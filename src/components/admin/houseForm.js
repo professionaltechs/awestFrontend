@@ -2,6 +2,7 @@ import { React, useEffect, useRef, useState } from "react";
 import { axiosAuthInstance, axiosInstance } from "../../axios";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { upload } from "@testing-library/user-event/dist/upload";
 
 export const HouseForm = ({ manageMenuState }) => {
   const buttonEnable = useRef(true);
@@ -16,39 +17,45 @@ export const HouseForm = ({ manageMenuState }) => {
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState([]);
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [responseArray, setResponseArray] = useState([]);
+  const [uploadingProgress, setUploadingProgress] = useState(false);
+
   let navigate = useNavigate();
 
   const createHouse = async (e) => {
     e.preventDefault();
 
-
-    if (images.length == 0) {
+    if (responseArray.length == 0) {
       alert("Please upload images");
       return;
     }
 
-    // axiosAuthInstance({
-    //   method: "post",
-    //   url: "apartment/add-apartment",
-    //   data: {
-    //     name,
-    //     houseUrl,
-    //     price,
-    //     description,
-    //     images,
-    //     stairs,
-    //     numberOfBedrooms: rooms,
-    //     complex,
-    //   },
-    // })
-    //   .then((res) => {
-    //     if (res.data.statusCode == 403) {
-    //       navigate("/admin/login");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axiosAuthInstance({
+      method: "post",
+      url: "apartment/add-apartment",
+      data: {
+        name,
+        houseUrl,
+        price,
+        description,
+        // images,
+        responseArray,
+        stairs,
+        numberOfBedrooms: rooms,
+        complex,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == "apartment added succesfully") {
+          navigate("/admin/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     setName("");
     setHouseUrl("");
@@ -59,12 +66,65 @@ export const HouseForm = ({ manageMenuState }) => {
     setStairs("");
   };
 
-  const uploadImage = (imageList) => {
-    // const ''
-  }
-  const uploadFiles = () => {
+  // IMAGE UPLOAD
+  const handleImageChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
 
-  }
+  const uploadImage = () => {
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+
+    axios
+      .post(`https://backend.awestman.com/imageUpload`, formData)
+      .then((response) => {
+        let imageResponse = response.data.message[0];
+        setResponseArray((prev) => {
+          return [...prev, imageResponse];
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (selectedImage) {
+      uploadImage();
+    }
+  }, [selectedImage]);
+
+  // UPLOAD VIDEO
+  const handleVideoChange = (e) => {
+    setSelectedVideo(e.target.files[0]);
+  };
+
+  const uploadVideo = () => {
+    const formData = new FormData();
+    formData.append("image", selectedVideo);
+    setUploadingProgress(true);
+    axios
+      .post(`https://backend.awestman.com/imageUpload`, formData)
+      .then((response) => {
+        setUploadingProgress(false);
+        let videoResponse = response.data.message[0];
+        setResponseArray((prev) => {
+          return [...prev, videoResponse];
+        });
+      })
+      .catch((error) => {
+        setUploadingProgress(false);
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (selectedVideo) {
+      uploadVideo();
+    }
+  }, [selectedVideo]);
+
+  console.log(responseArray);
 
   return (
     <>
@@ -106,7 +166,7 @@ export const HouseForm = ({ manageMenuState }) => {
                               multiple
                               accept="*.png, *.gif, *.jpeg"
                               onChange={(e) => {
-                                uploadImage(e.target.files);
+                                handleImageChange(e);
                               }}
                             />
                             <label className="button" for="imgUpload">
@@ -123,14 +183,15 @@ export const HouseForm = ({ manageMenuState }) => {
                           <form className="imgUploader">
                             <input
                               type="file"
-                              id="imgUpload"
+                              id="videoUpload"
                               multiple
                               accept="videos/*"
+                              style={{ display: "none" }}
                               onChange={(e) => {
-                                uploadFiles(e.target.files, images);
+                                handleVideoChange(e);
                               }}
                             />
-                            <label className="button" for="imgUpload">
+                            <label className="button" for="videoUpload">
                               ...or Upload From Your Computer
                             </label>
                           </form>
@@ -169,7 +230,7 @@ export const HouseForm = ({ manageMenuState }) => {
                         <input
                           value={price}
                           onChange={(e) => setPrice(e.target.value)}
-                          type="text"
+                          type="number"
                           className="form-control"
                           id="inputAddress"
                           placeholder=""
@@ -245,6 +306,7 @@ export const HouseForm = ({ manageMenuState }) => {
                         type="button"
                         onClick={createHouse}
                         className="btn px-5"
+                        disabled={uploadingProgress}
                       >
                         Submit
                       </button>

@@ -100,10 +100,10 @@ h6{
     height: 40px;
 }
 
-.gallery-item{
+/* .gallery-item{
     display: none;
     visibility: hidden;
-}
+} */
 .svg1,.svg2,.credit{
     margin-top: 8px;
     width: 70px;
