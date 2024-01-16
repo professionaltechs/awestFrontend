@@ -1,13 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ApartmentCard } from "../../components/user/ApartmentCard";
 // import styles
-import "lightgallery/css/lightgallery.css";
-import "lightgallery/css/lg-thumbnail.css";
+// import "lightgallery/css/lightgallery.css";
+// import "lightgallery/css/lg-thumbnail.css";
+// import "lightgallery/css/lg-video.css";
 // import { HomeBanner } from "../../components/user/homeBanner";
 import texasStar from "../../assets/images/texas_star.jpg";
 import { axiosInstance } from "../../axios";
 import { NavBar } from "../../components/user/NavBar";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+
+
+
+
+
+
+
+
 
 export const Home = () => {
   const [records, setRecords] = useState([]);
@@ -181,6 +190,7 @@ export const Home = () => {
                     />
                   );
                 })}
+                
               </div>
             </div>
           </div>
