@@ -51,6 +51,7 @@ export const ApartmentCard = ({
                   return (
                     <>
                       <a
+                        data-lg-size="1280-720"
                         // data-video='{"source": [{"src":"https://backend.awestman.com/2024-01-15T21-51-21.222Zpexels-polina-kovaleva-5644324 (1080p).mp4", "type":"video/mp4"}], "attributes": {"controls": true}}'
                         data-video={videoConfigString}
                         data-poster="https://img.youtube.com/vi/EIUJfXk3_3w/maxresdefault.jpg"
