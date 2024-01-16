@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { upload } from "@testing-library/user-event/dist/upload";
 
 export const HouseForm = ({ manageMenuState }) => {
+  const inputImageRef = useRef();
+  const inputVideoRef = useRef();
+
   const buttonEnable = useRef(true);
 
   const [name, setName] = useState("");
@@ -21,6 +24,7 @@ export const HouseForm = ({ manageMenuState }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [responseArray, setResponseArray] = useState([]);
   const [uploadingProgress, setUploadingProgress] = useState(false);
+  const [uploadingProgressImage, setUploadingprogressImage] = useState(false)
 
   let navigate = useNavigate();
 
@@ -38,9 +42,11 @@ export const HouseForm = ({ manageMenuState }) => {
       data: {
         name,
         houseUrl,
+        // unitUrl : houseUrl,
         price,
         description,
         // images,
+        images: responseArray,
         responseArray,
         stairs,
         numberOfBedrooms: rooms,
@@ -68,23 +74,30 @@ export const HouseForm = ({ manageMenuState }) => {
 
   // IMAGE UPLOAD
   const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0]);
+    setSelectedImage([...event.target.files]);
+    // setSelectedImage(event.target.files[0]);
   };
 
   const uploadImage = () => {
+    console.log(selectedImage.length);
     const formData = new FormData();
-    formData.append("image", selectedImage);
-
+    selectedImage.forEach((element, index) => {
+      formData.append("image", element);
+    });
+    setUploadingprogressImage(true)
+    // formData.append("image", selectedImage);
     axios
       .post(`https://backend.awestman.com/imageUpload`, formData)
       .then((response) => {
-        let imageResponse = response.data.message[0];
+        let imageResponse = response.data.message;
         setResponseArray((prev) => {
-          return [...prev, imageResponse];
+          return [...prev, ...imageResponse];
         });
+        setUploadingprogressImage(false)
       })
       .catch((error) => {
         console.log(error);
+        setUploadingprogressImage(false)
       });
   };
 
@@ -96,20 +109,25 @@ export const HouseForm = ({ manageMenuState }) => {
 
   // UPLOAD VIDEO
   const handleVideoChange = (e) => {
-    setSelectedVideo(e.target.files[0]);
+    setSelectedVideo([...e.target.files]);
+    // setSelectedVideo(e.target.files[0]);
   };
 
   const uploadVideo = () => {
     const formData = new FormData();
-    formData.append("image", selectedVideo);
+    selectedVideo.forEach((element, index) => {
+      formData.append("image", element);
+    });
+    // formData.append("image", selectedVideo);
     setUploadingProgress(true);
     axios
       .post(`https://backend.awestman.com/imageUpload`, formData)
       .then((response) => {
         setUploadingProgress(false);
-        let videoResponse = response.data.message[0];
+        console.log(response.data.message);
+        let videoResponse = response.data.message;
         setResponseArray((prev) => {
-          return [...prev, videoResponse];
+          return [...prev, ...videoResponse];
         });
       })
       .catch((error) => {
@@ -128,6 +146,7 @@ export const HouseForm = ({ manageMenuState }) => {
 
   return (
     <>
+      {/* <input type="file" accept="video/*"/> */}
       <section className="home-section">
         <div className="home-content">
           <i
@@ -161,15 +180,21 @@ export const HouseForm = ({ manageMenuState }) => {
                           <p>Drag & Drop Images Here...</p>
                           <form className="imgUploader">
                             <input
+                              ref={inputImageRef}
                               type="file"
                               id="imgUpload"
                               multiple
-                              accept="*.png, *.gif, *.jpeg"
+                              accept=".png, .gif, .jpeg"
                               onChange={(e) => {
                                 handleImageChange(e);
                               }}
                             />
-                            <label className="button" for="imgUpload">
+                            <label
+                              className="button"
+                              onClick={() => {
+                                inputImageRef.current.click();
+                              }}
+                            >
                               ...or Upload From Your Computer
                             </label>
                           </form>
@@ -182,16 +207,22 @@ export const HouseForm = ({ manageMenuState }) => {
                           <p>Drag & Drop Videos Here...</p>
                           <form className="imgUploader">
                             <input
+                              ref={inputVideoRef}
                               type="file"
                               id="videoUpload"
                               multiple
-                              accept="videos/*"
+                              accept="video/mp4"
                               style={{ display: "none" }}
                               onChange={(e) => {
                                 handleVideoChange(e);
                               }}
                             />
-                            <label className="button" for="videoUpload">
+                            <label
+                              className="button"
+                              onClick={() => {
+                                inputVideoRef.current.click();
+                              }}
+                            >
                               ...or Upload From Your Computer
                             </label>
                           </form>
@@ -300,13 +331,15 @@ export const HouseForm = ({ manageMenuState }) => {
                         </select>
                       </div>
                     </div>
+                    {(uploadingProgress || uploadingProgressImage) && <p style={{marginTop: '10px', textAlign: 'center', fontSize: '12px', color: '#07BC0C'}}>Upload in progress</p>}
+
                     <div className="d-flex justify-content-center mt-3">
                       <button
                         style={{ background: "#64C5B1", color: "white" }}
                         type="button"
                         onClick={createHouse}
                         className="btn px-5"
-                        disabled={uploadingProgress}
+                        disabled={uploadingProgress || uploadingProgressImage}
                       >
                         Submit
                       </button>

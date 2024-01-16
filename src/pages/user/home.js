@@ -3,7 +3,7 @@ import { ApartmentCard } from "../../components/user/ApartmentCard";
 // import styles
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-thumbnail.css";
-import { HomeBanner } from "../../components/user/homeBanner";
+// import { HomeBanner } from "../../components/user/homeBanner";
 import texasStar from "../../assets/images/texas_star.jpg";
 import { axiosInstance } from "../../axios";
 import { NavBar } from "../../components/user/NavBar";
@@ -88,7 +88,7 @@ export const Home = () => {
   return (
     <div>
       <NavBar />
-      <HomeBanner />
+      {/* <HomeBanner /> */}
 
       {/* Floor plans */}
 
@@ -164,6 +164,7 @@ export const Home = () => {
               </div>
 
               <div className="row p-1">
+                {console.log(records)}
                 {records.map((item, index) => {
                   return (
                     <ApartmentCard
