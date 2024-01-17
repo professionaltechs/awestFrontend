@@ -41,8 +41,8 @@ export const HouseForm = ({ manageMenuState }) => {
       url: "apartment/add-apartment",
       data: {
         name,
-        houseUrl,
-        // unitUrl : houseUrl,
+        // houseUrl,
+        unitUrl : houseUrl,
         price,
         description,
         // images,
