@@ -30,6 +30,49 @@ export const ApartmentCard = ({
     }
   }, []);
 
+  const getItems = useCallback(() => {
+    return imgLinks.map((item, index) => {
+      if (item.includes("mp4")) {
+        const videoUrl = "https://backend.awestman.com/" + item;
+        const videoConfigString = {
+          source: [{ src: videoUrl, type: "video/mp4" }],
+          attributes: {
+            controls: false,
+            // autoplay: false,
+          },
+        };
+
+        return (
+          <a
+            key={index}
+            data-video={JSON.stringify(videoConfigString)}
+            className="gallery-item"
+          >
+            <img
+              className="img-fluid d-block rounded-top"
+              src="https://img.youtube.com/vi/EIUJfXk3_3w/maxresdefault.jpg"
+              alt=""
+            />
+          </a>
+        );
+      } else {
+        return (
+          <a
+            key={index}
+            className="gallery-item"
+            href={`https://backend.awestman.com/${item}`}
+          >
+            <img
+              className="img-fluid d-block rounded-top"
+              src={`https://backend.awestman.com/${item}`}
+              alt=""
+            />
+          </a>
+        );
+      }
+    });
+  }, []);
+
   return (
     <div className="col-lg-4 col-md-6 col-12 mb-4 pb-2">
       <div className="service-image rounded shadow">
@@ -39,7 +82,7 @@ export const ApartmentCard = ({
             plugins={[lgThumbnail, lgVideo, lgZoom]}
             onInit={onInit}
           >
-            {imgLinks.map((item, index) => {
+            {/* {imgLinks.map((item, index) => {
               if (item.includes("mp4")) {
                 const videoUrl = "https://backend.awestman.com/" + item;
                 const videoConfigString = {
@@ -78,7 +121,8 @@ export const ApartmentCard = ({
                   </a>
                 );
               }
-            })}
+            })} */}
+            {getItems()}
           </LightGallery>
         </div>
         <div
