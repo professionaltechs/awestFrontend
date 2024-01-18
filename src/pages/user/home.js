@@ -11,13 +11,6 @@ import { NavBar } from "../../components/user/NavBar";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 
-
-
-
-
-
-
-
 export const Home = () => {
   const [records, setRecords] = useState([]);
   const [totalRecords, setTotalRecords] = useState([]);

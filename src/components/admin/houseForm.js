@@ -184,7 +184,7 @@ export const HouseForm = ({ manageMenuState }) => {
                               type="file"
                               id="imgUpload"
                               multiple
-                              accept=".png, .gif, .jpeg"
+                              accept=".png, .gif, .jpeg, .jpg"
                               onChange={(e) => {
                                 handleImageChange(e);
                               }}
