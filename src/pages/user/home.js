@@ -4,7 +4,7 @@ import { ApartmentCard } from "../../components/user/ApartmentCard";
 // import "lightgallery/css/lightgallery.css";
 // import "lightgallery/css/lg-thumbnail.css";
 // import "lightgallery/css/lg-video.css";
-// import { HomeBanner } from "../../components/user/homeBanner";
+import { HomeBanner } from "../../components/user/HomeBanner";
 import texasStar from "../../assets/images/texas_star.jpg";
 import { axiosInstance } from "../../axios";
 import { NavBar } from "../../components/user/NavBar";
@@ -90,7 +90,7 @@ export const Home = () => {
   return (
     <div>
       <NavBar />
-      {/* <HomeBanner /> */}
+      <HomeBanner />
 
       {/* Floor plans */}
 
