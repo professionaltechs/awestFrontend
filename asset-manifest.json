@@ -1,9 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.5f63a2d4.css",
-    "main.js": "/static/js/main.f7ed770c.js",
+    "main.js": "/static/js/main.d5bbb822.js",
     "static/js/787.29fe6465.chunk.js": "/static/js/787.29fe6465.chunk.js",
+    "static/media/timberwood-apartments.jpg": "/static/media/timberwood-apartments.593a0d81f99a404dc87f.jpg",
+    "static/media/lumberton-tx-apartments.jpg": "/static/media/lumberton-tx-apartments.b8d24b23d7d70e0c8d32.jpg",
     "static/media/texas_star.jpg": "/static/media/texas_star.ed94ae97a973b8f15474.jpg",
+    "static/media/stagecoach-apartments.jpg": "/static/media/stagecoach-apartments.e74146cbda9c3d9b13cc.jpg",
     "static/media/lg.svg?io9a6k": "/static/media/lg.09cd8e9be7081f216644.svg",
     "static/media/a-west-logo.jpg": "/static/media/a-west-logo.43255a9fab90e0b59c2f.jpg",
     "static/media/lg.woff?io9a6k": "/static/media/lg.356a0e9cb064c7a196c6.woff",
@@ -11,11 +14,11 @@
     "static/media/lg.woff2?io9a6k": "/static/media/lg.64b800aa30714fd916dc.woff2",
     "index.html": "/index.html",
     "main.5f63a2d4.css.map": "/static/css/main.5f63a2d4.css.map",
-    "main.f7ed770c.js.map": "/static/js/main.f7ed770c.js.map",
+    "main.d5bbb822.js.map": "/static/js/main.d5bbb822.js.map",
     "787.29fe6465.chunk.js.map": "/static/js/787.29fe6465.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f63a2d4.css",
-    "static/js/main.f7ed770c.js"
+    "static/js/main.d5bbb822.js"
   ]
 }
