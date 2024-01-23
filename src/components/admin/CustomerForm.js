@@ -3,14 +3,16 @@ import { axiosAuthInstance } from "../../axios";
 import { useNavigate } from "react-router-dom";
 
 const CustomerForm = ({ manageMenuState }) => {
+  const userType = localStorage.getItem("userType");
+
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [confirmPassword, setConfirmPass] = useState("");
-  const [userRole, setuserRole] = useState("select");
+  const [userRole, setuserRole] = useState(
+    userType === "superAdmin" ? "admin" : "user"
+  );
 
   const navigate = useNavigate();
-
-  const userType = localStorage.getItem("userType");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,33 +27,32 @@ const CustomerForm = ({ manageMenuState }) => {
       type = 0;
     }
 
-    console.log(type);
-    // if (admin) {
-    //   if (password === confirmPassword) {
-    //     axiosAuthInstance({
-    //       method: "post",
-    //       url: "/admin/createUser",
-    //       data: {
-    //         email,
-    //         password,
-    //         type,
-    //       },
-    //     })
-    //       .then((res) => {
-    //         // if (res.data.statusCode == 403) {
-    //         //   navigate("/admin/login");
-    //         // }
-    //         alert(res.data.status);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   } else {
-    //     alert("wrong");
-    //   }
-    // } else {
-    //   alert("not logged in");
-    // }
+    if (admin) {
+      if (password === confirmPassword) {
+        axiosAuthInstance({
+          method: "post",
+          url: "/admin/createUser",
+          data: {
+            email,
+            password,
+            type,
+          },
+        })
+          .then((res) => {
+            // if (res.data.statusCode == 403) {
+            //   navigate("/admin/login");
+            // }
+            alert(res.data.status);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        alert("wrong");
+      }
+    } else {
+      alert("not logged in");
+    }
   };
 
   return (
@@ -117,7 +118,7 @@ const CustomerForm = ({ manageMenuState }) => {
                           onChange={(e) => setConfirmPass(e.target.value)}
                         />
                       </div>
-                      {userType === "superAdmin" || userType=== "admin" ? (
+                      {userType === "superAdmin" || userType === "admin" ? (
                         <div className="col-12">
                           <label className="form-label" htmlFor="userRole">
                             User Role
