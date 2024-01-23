@@ -6,39 +6,52 @@ const CustomerForm = ({ manageMenuState }) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [confirmPassword, setConfirmPass] = useState("");
+  const [userRole, setuserRole] = useState("select");
 
   const navigate = useNavigate();
+
+  const userType = localStorage.getItem("userType");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const admin = localStorage.getItem("adminAwestToken");
+    let type = "";
 
-    if (admin) {
-      if (password === confirmPassword) {
-        axiosAuthInstance({
-          method: "post",
-          url: "/admin/createUser",
-          data: {
-            email,
-            password,
-          },
-        })
-          .then((res) => {
-            // if (res.data.statusCode == 403) {
-            //   navigate("/admin/login");
-            // }
-            alert(res.data.status);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        alert("wrong");
-      }
-    } else {
-      alert("not logged in");
+    if (userRole === "admin") {
+      type = 1;
     }
+    if (userRole === "user") {
+      type = 0;
+    }
+
+    console.log(type);
+    // if (admin) {
+    //   if (password === confirmPassword) {
+    //     axiosAuthInstance({
+    //       method: "post",
+    //       url: "/admin/createUser",
+    //       data: {
+    //         email,
+    //         password,
+    //         type,
+    //       },
+    //     })
+    //       .then((res) => {
+    //         // if (res.data.statusCode == 403) {
+    //         //   navigate("/admin/login");
+    //         // }
+    //         alert(res.data.status);
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   } else {
+    //     alert("wrong");
+    //   }
+    // } else {
+    //   alert("not logged in");
+    // }
   };
 
   return (
@@ -104,6 +117,30 @@ const CustomerForm = ({ manageMenuState }) => {
                           onChange={(e) => setConfirmPass(e.target.value)}
                         />
                       </div>
+                      {userType === "superAdmin" || userType=== "admin" ? (
+                        <div className="col-12">
+                          <label className="form-label" htmlFor="userRole">
+                            User Role
+                          </label>
+                          <select
+                            className="form-select"
+                            id="userRole"
+                            onChange={(e) => setuserRole(e.target.value)}
+                          >
+                            <option value="" disabled>
+                              Select a role
+                            </option>
+                            {userType === "superAdmin" ? (
+                              <option value="admin">Admin</option>
+                            ) : (
+                              ""
+                            )}
+                            <option value="user">User</option>
+                          </select>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div className="d-flex justify-content-center mt-3">
                       <button

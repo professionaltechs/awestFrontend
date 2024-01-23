@@ -22,8 +22,14 @@ export const AdminLogin = () => {
       },
     })
       .then((res) => {
-        localStorage.setItem("adminAwestToken", res.data.token);
+        localStorage.setItem(`adminAwestToken`, res.data.token);
         localStorage.setItem("isLoggedIn", true);
+        if (res.data.data.type === 2) {
+          localStorage.setItem(`userType`, "superAdmin");
+        }
+        if (res.data.data.type === 1) {
+          localStorage.setItem(`userType`, "admin");
+        }
         navigate("/admin/");
       })
       .catch((err) => console.log(err));
