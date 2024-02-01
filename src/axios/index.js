@@ -2,7 +2,7 @@ import axios from "axios";
 
 const adminToken = () => localStorage.getItem("adminAwestToken");
 
-const localURL = "http://localhost:5000/";
+// const localURL = "http://localhost:5000/";
 const productionURL = "https://backend.awestman.com/";
 
 export const axiosInstance = axios.create({

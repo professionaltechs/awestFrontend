@@ -9,7 +9,7 @@ const CustomerList = ({ manageMenuState }) => {
   const fetchCustomers = () => {
     axiosAuthInstance({
       method: "post",
-      url: "http://localhost:5000/admin/getAllusers",
+      url: "admin/getAllusers",
     })
       .then((res) => {
         if (res.data.statusCode == 403) {
@@ -123,7 +123,7 @@ const CustomerList = ({ manageMenuState }) => {
                             {customerList.map((customer, index) => (
                               <tr role="row" className="odd" key={index}>
                                 <td>{customer.email}</td>
-                                <td>{customer.type}</td>
+                                <td>{customer.type === 2 ? "Super Admin" : "Admin"}</td>
                               </tr>
                             ))}
                           </tbody>
